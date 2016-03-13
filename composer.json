@@ -19,5 +19,8 @@
     "psr-4": {
       "RoundPartner\\Conf\\": "src/"
     }
-  }
+  },
+  "bin": [
+    "bin/set_configs_permission.sh"
+  ]
 }
