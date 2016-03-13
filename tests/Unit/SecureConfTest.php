@@ -28,6 +28,11 @@ class SecureConfTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->instance->has('test', 'test_key_one'));
     }
 
+    public function testHasNotItem()
+    {
+        $this->assertFalse($this->instance->has('test', 'test_key_four'));
+    }
+
     public function testGet()
     {
         $this->assertNotEmpty($this->instance->get('test'));
@@ -36,6 +41,17 @@ class SecureConfTest extends PHPUnit_Framework_TestCase
     public function testGetItem()
     {
         $this->assertEquals('test value two', $this->instance->get('test', 'test_key_two'));
+    }
+
+    public function testGetItemNotAvailable()
+    {
+        $this->assertNull($this->instance->get('test', 'test_key_four'));
+    }
+
+    public function testGetItemMissingConfig()
+    {
+        $this->setExpectedException('\Exception');
+        $this->instance->get('missing', 'test_key_four');
     }
 
 }
