@@ -46,6 +46,15 @@ class PullConf
             return true;
         }
 
+        if (file_exists('/opt/roundpartner/library/rp-conf/configs/' . $config . '.ini')) {
+            $command = sprintf('cp /opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
+            $process = new Process($command, $this->workingDirectory);
+            $process->run();
+            if ($process->isSuccessful()) {
+                return true;
+            }
+        }
+
         $command = sprintf('scp alice:/opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
         $process = new Process($command, $this->workingDirectory);
         try {
