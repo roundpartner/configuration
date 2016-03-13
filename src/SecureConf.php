@@ -9,6 +9,8 @@ class SecureConf
      */
     private $config;
 
+    private $pullConf;
+
     /**
      * SecureConf constructor.
      */
