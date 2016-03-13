@@ -33,13 +33,9 @@ class PullConf
             $configs = [$configs];
         }
 
-        $configString = '';
         foreach ($configs as $config) {
-            $configString.=$this->pullConfig($config);
-            $configString.="\n";
+            $this->pullConfig($config);
         }
-
-        file_put_contents($this->workingDirectory . '/auth.ini', $configString);
 
         return true;
     }
@@ -47,7 +43,7 @@ class PullConf
     private function pullConfig($config)
     {
         if (file_exists($this->workingDirectory . '/' . $config . '.ini')) {
-            return file_get_contents($this->workingDirectory . '/' . $config . '.ini');
+            return true;
         }
 
         $command = sprintf('scp alice:/opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
@@ -57,7 +53,7 @@ class PullConf
         } catch(\Exception $exception) {
             throw new \Exception('Failed to download configs');
         }
-        return file_get_contents($this->workingDirectory . '/' . $config . '.ini');
+        return true;
     }
 
 }

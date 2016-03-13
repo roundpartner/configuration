@@ -16,8 +16,7 @@ class SecureConf
      */
     public function __construct()
     {
-        $authConfigFile = dirname(__FILE__) . '/../configs/auth.ini';
-        $this->config = parse_ini_file($authConfigFile, true);
+        $this->config = array();
     }
 
     /**
@@ -28,6 +27,8 @@ class SecureConf
      */
     public function has($heading, $option = null)
     {
+        $this->loadConfig($heading);
+
         if (!array_key_exists($heading, $this->config)) {
             return false;
         }
@@ -45,6 +46,8 @@ class SecureConf
      */
     public function get($heading, $option = null)
     {
+        $this->loadConfig($heading);
+
         if (!$this->has($heading, $option)) {
             return null;
         }
@@ -63,5 +66,17 @@ class SecureConf
     private function getOption($config, $option)
     {
         return $config[$option];
+    }
+
+    private function loadConfig($heading)
+    {
+        $authConfigFile = dirname(__FILE__) . '/../configs/' . $heading . '.ini';
+        if (!file_exists($authConfigFile)) {
+            $pullConf = new PullConf();
+            $pullConf->pull($heading);
+        }
+
+        $config = parse_ini_file($authConfigFile, true);
+        $this->config[$heading] = $config[$heading];
     }
 }
