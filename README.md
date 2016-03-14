@@ -16,3 +16,15 @@ If the vendor folder is located in a subdirectory then pass in the path to the d
 ```bash
 ./bin/set_configs_permission.sh src/
 ```
+
+## Testing
+```bash
+cd tests
+phpunit
+```
+
+## Code Quality
+```bash
+./vendor/bin/phpcs --standard=psr2 ./src
+./vendor/bin/phpcbf --standard=psr2 ./src
+```

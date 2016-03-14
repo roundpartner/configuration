@@ -59,10 +59,9 @@ class PullConf
         $process = new Process($command, $this->workingDirectory);
         try {
             $process->mustRun();
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new \Exception('Failed to download configs');
         }
         return true;
     }
-
 }

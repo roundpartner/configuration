@@ -1,3 +1,1 @@
-# Configs
-
-Configuration files are pulled into this directory.
+This is for configuration files

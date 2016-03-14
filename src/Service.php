@@ -11,6 +11,8 @@ class Service
     private static $instance;
 
     /**
+     * Check if configuration item exists
+     *
      * @param string $heading
      * @param string $option
      *
@@ -22,6 +24,8 @@ class Service
     }
 
     /**
+     * Get configuration value
+     *
      * @param string $heading
      * @param string $option
      *
@@ -35,7 +39,7 @@ class Service
     /**
      * @return SecureConf
      */
-    public static function getInstance()
+    private static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new SecureConf();
