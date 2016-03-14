@@ -9,10 +9,7 @@ class PullConfTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $workingDirectory = __DIR__ . '/../../configs';
-        $process = new \Symfony\Component\Process\Process('rm -rf configs', dirname($workingDirectory));
-        $process->run();
-
+        $this->cleanConfigFolder();
         $this->config = new \RoundPartner\Conf\PullConf();
     }
 
@@ -26,4 +23,12 @@ class PullConfTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->config->pull(array('db', 'test')));
     }
 
+    private function cleanConfigFolder()
+    {
+        $workingDirectory = __DIR__ . '/../../configs';
+        if (is_dir($workingDirectory)) {
+            $process = new \Symfony\Component\Process\Process('rm -f *.ini', dirname($workingDirectory));
+            $process->run();
+        }
+    }
 }
