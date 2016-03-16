@@ -7,6 +7,9 @@ use Symfony\Component\Process\Process;
 class PullConf
 {
 
+    /**
+     * @var string
+     */
     protected $workingDirectory;
 
     public function __construct()

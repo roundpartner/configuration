@@ -27,8 +27,14 @@ class PullConfTest extends PHPUnit_Framework_TestCase
     {
         $workingDirectory = __DIR__ . '/../../configs';
         if (is_dir($workingDirectory)) {
-            $process = new \Symfony\Component\Process\Process('rm -f *.ini', dirname($workingDirectory));
-            $process->run();
+            $files = scandir($workingDirectory);
+            foreach ($files as $file) {
+                if (preg_match('/\.ini$/', $file)) {
+                    if (!unlink($workingDirectory . '/' . $file)) {
+                        throw new \Exception('Failed to unlink config');
+                    }
+                }
+            }
         }
     }
 }
