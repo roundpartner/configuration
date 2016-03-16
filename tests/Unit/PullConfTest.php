@@ -20,7 +20,7 @@ class PullConfTest extends PHPUnit_Framework_TestCase
 
     public function testGetConfigArray()
     {
-        $this->assertTrue($this->config->pull(array('db', 'test')));
+        $this->assertTrue($this->config->pull(array('db', 'test', 'test')));
     }
 
     private function cleanConfigFolder()
