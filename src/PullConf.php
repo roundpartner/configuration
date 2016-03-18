@@ -39,6 +39,12 @@ class PullConf
 
     }
 
+    /**
+     * @param string[] $configs
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function pull($configs)
     {
         if (is_string($configs)) {

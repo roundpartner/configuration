@@ -31,9 +31,10 @@ class SecureConf
      */
     public function has($heading, $option = null)
     {
-        $this->loadConfig($heading);
-
-        if (!array_key_exists($heading, $this->config)) {
+        if (
+            !$this->loadConfig($heading)
+            || !array_key_exists($heading, $this->config)
+        ) {
             return false;
         }
         if ($option !== null && !array_key_exists($option, $this->config[$heading])) {
@@ -75,10 +76,17 @@ class SecureConf
         $authConfigFile = $this->configDirectory . '/' . $heading . '.ini';
         if (!file_exists($authConfigFile)) {
             $pullConf = PullConfigFactory::create($this->configDirectory);
-            $pullConf->pull($heading);
+            try {
+                $pullConf->pull($heading);
+            } catch (\Exception $exception) {
+                // @todo should we log this error
+                return false;
+            }
         }
 
         $config = parse_ini_file($authConfigFile, true);
         $this->config[$heading] = $config[$heading];
+
+        return true;
     }
 }

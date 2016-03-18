@@ -30,7 +30,6 @@ class SecureConfTest extends PHPUnit_Framework_TestCase
 
     public function testHasNotKey()
     {
-        $this->setExpectedException('\Exception', 'Failed to download configs');
         $this->assertFalse($this->instance->has('missing'));
     }
 
@@ -56,8 +55,7 @@ class SecureConfTest extends PHPUnit_Framework_TestCase
 
     public function testGetItemMissingConfig()
     {
-        $this->setExpectedException('\Exception');
-        $this->instance->get('missing', 'test_key_four');
+        $this->assertNull($this->instance->get('missing', 'test_key_four'));
     }
 
 }
