@@ -2,6 +2,8 @@
 
 namespace RoundPartner\Conf;
 
+use RoundPartner\Conf\Plugin\File;
+use RoundPartner\Conf\Plugin\RemoteFile;
 use Symfony\Component\Process\Process;
 
 class PullConf
@@ -43,28 +45,29 @@ class PullConf
         return true;
     }
 
+    /**
+     * @param string $config
+     *
+     * @return bool
+     * @throws \Exception
+     */
     private function pullConfig($config)
     {
         if (file_exists($this->workingDirectory . '/' . $config . '.ini')) {
             return true;
         }
 
-        if (file_exists('/opt/roundpartner/library/rp-conf/configs/' . $config . '.ini')) {
-            $command = sprintf('cp /opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
-            $process = new Process($command, $this->workingDirectory);
-            $process->run();
-            if ($process->isSuccessful()) {
-                return true;
-            }
+        $plugin = new File();
+        if ($plugin->pullConfig($config, $this->workingDirectory)) {
+            return true;
         }
 
-        $command = sprintf('scp alice:/opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
-        $process = new Process($command, $this->workingDirectory);
-        try {
-            $process->mustRun();
-        } catch (\Exception $exception) {
-            throw new \Exception('Failed to download configs');
+        $plugin = new RemoteFile();
+        if ($plugin->pullConfig($config, $this->workingDirectory)) {
+            return true;
         }
-        return true;
+
+        // @todo: change this to return bool
+        throw new \Exception('Failed to download configs');
     }
 }
