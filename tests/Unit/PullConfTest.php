@@ -11,6 +11,7 @@ class PullConfTest extends PHPUnit_Framework_TestCase
     {
         $this->cleanConfigFolder();
         $this->config = new \RoundPartner\Conf\PullConf();
+        $this->config->addPlugin(new \RoundPartner\Conf\Plugin\File());
     }
 
     public function testGetConfig()
@@ -21,6 +22,11 @@ class PullConfTest extends PHPUnit_Framework_TestCase
     public function testGetConfigArray()
     {
         $this->assertTrue($this->config->pull(array('db', 'test', 'test')));
+    }
+
+    public function testAddPlugin()
+    {
+        $this->assertTrue($this->config->addPlugin(new \RoundPartner\Conf\Plugin\File()));
     }
 
     private function cleanConfigFolder()

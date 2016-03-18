@@ -2,12 +2,15 @@
 
 namespace RoundPartner\Conf;
 
-use RoundPartner\Conf\Plugin\File;
-use RoundPartner\Conf\Plugin\RemoteFile;
-use Symfony\Component\Process\Process;
+use RoundPartner\Conf\Plugin\PluginInterface;
 
 class PullConf
 {
+
+    /**
+     * @var PluginInterface[]
+     */
+    protected $plugins;
 
     /**
      * @var string
@@ -24,12 +27,15 @@ class PullConf
             }
         }
 
-        // realpath has to be run once the folder has been created
+        // real path has to be run once the folder has been created
         $this->workingDirectory = realpath($this->workingDirectory);
 
         if (!is_dir($this->workingDirectory)) {
             throw new \Exception('Unable to create config directory because target is not a directory.');
         }
+
+        $this->plugins = array();
+
     }
 
     public function pull($configs)
@@ -57,17 +63,20 @@ class PullConf
             return true;
         }
 
-        $plugin = new File();
-        if ($plugin->pullConfig($config, $this->workingDirectory)) {
-            return true;
-        }
-
-        $plugin = new RemoteFile();
-        if ($plugin->pullConfig($config, $this->workingDirectory)) {
-            return true;
+        foreach ($this->plugins as $plugin) {
+            if ($plugin->pullConfig($config, $this->workingDirectory)) {
+                return true;
+            }
         }
 
         // @todo: change this to return bool
         throw new \Exception('Failed to download configs');
     }
+
+    public function addPlugin(PluginInterface $plugin)
+    {
+        $this->plugins[get_class($plugin)] = $plugin;
+        return true;
+    }
+
 }

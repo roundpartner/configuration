@@ -70,7 +70,7 @@ class SecureConf
     {
         $authConfigFile = dirname(__FILE__) . '/../configs/' . $heading . '.ini';
         if (!file_exists($authConfigFile)) {
-            $pullConf = new PullConf();
+            $pullConf = PullConfigFactory::create();
             $pullConf->pull($heading);
         }
 
