@@ -31,7 +31,7 @@ class PullConfTest extends PHPUnit_Framework_TestCase
 
     private function cleanConfigFolder()
     {
-        $workingDirectory = __DIR__ . '/../../configs';
+        $workingDirectory = CONFIG_DIR;
         if (is_dir($workingDirectory)) {
             $files = scandir($workingDirectory);
             foreach ($files as $file) {
