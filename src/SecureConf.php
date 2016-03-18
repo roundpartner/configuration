@@ -50,8 +50,6 @@ class SecureConf
      */
     public function get($heading, $option = null)
     {
-        $this->loadConfig($heading);
-
         if (!$this->has($heading, $option)) {
             return null;
         }

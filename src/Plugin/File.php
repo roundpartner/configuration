@@ -2,10 +2,24 @@
 
 namespace RoundPartner\Conf\Plugin;
 
-use Symfony\Component\Process\Process;
-
 class File implements PluginInterface
 {
+
+    /**
+     * @var string
+     */
+    protected $processRunner;
+
+    /**
+     * File constructor.
+     *
+     * @param string $processRunner
+     */
+    public function __construct($processRunner = 'Symfony\Component\Process\Process')
+    {
+        $this->processRunner = $processRunner;
+    }
+
     /**
      * @param string $config
      * @param string $workingDirectory
@@ -19,7 +33,19 @@ class File implements PluginInterface
         }
 
         $command = sprintf('cp /opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
-        $process = new Process($command, $workingDirectory);
+
+        return $this->callProcess($command, $workingDirectory);
+    }
+
+    /**
+     * @param string $command
+     * @param string $workingDirectory
+     *
+     * @return bool
+     */
+    private function callProcess($command, $workingDirectory)
+    {
+        $process = new $this->processRunner($command, $workingDirectory);
         $process->run();
         if (!$process->isSuccessful()) {
             return false;
