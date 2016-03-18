@@ -85,5 +85,4 @@ class PullConf
         $this->plugins[get_class($plugin)] = $plugin;
         return true;
     }
-
 }

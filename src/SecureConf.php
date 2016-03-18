@@ -31,8 +31,7 @@ class SecureConf
      */
     public function has($heading, $option = null)
     {
-        if (
-            !$this->loadConfig($heading)
+        if (!$this->loadConfig($heading)
             || !array_key_exists($heading, $this->config)
         ) {
             return false;
