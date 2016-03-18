@@ -10,7 +10,7 @@ class PullConfTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->cleanConfigFolder();
-        $this->config = new \RoundPartner\Conf\PullConf();
+        $this->config = new \RoundPartner\Conf\PullConf(CONFIG_DIR);
         $this->config->addPlugin(new \RoundPartner\Conf\Plugin\File());
     }
 

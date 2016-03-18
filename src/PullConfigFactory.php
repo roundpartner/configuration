@@ -10,11 +10,13 @@ class PullConfigFactory
     /**
      * Create new instance with all plugins loaded
      *
+     * @param string $configDirectory
+     *
      * @return PullConf
      */
-    public static function create()
+    public static function create($configDirectory)
     {
-        $service = new PullConf();
+        $service = new PullConf($configDirectory);
         $service->addPlugin(new File());
         $service->addPlugin(new RemoteFile());
         return $service;

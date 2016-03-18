@@ -10,10 +10,16 @@ class SecureConf
     private $config;
 
     /**
+     * @var string
+     */
+    private $configDirectory;
+
+    /**
      * SecureConf constructor.
      */
     public function __construct()
     {
+        $this->configDirectory = dirname(__FILE__) . '/../configs';
         $this->config = array();
     }
 
@@ -68,9 +74,9 @@ class SecureConf
 
     private function loadConfig($heading)
     {
-        $authConfigFile = dirname(__FILE__) . '/../configs/' . $heading . '.ini';
+        $authConfigFile = $this->configDirectory . '/' . $heading . '.ini';
         if (!file_exists($authConfigFile)) {
-            $pullConf = PullConfigFactory::create();
+            $pullConf = PullConfigFactory::create($this->configDirectory);
             $pullConf->pull($heading);
         }
 

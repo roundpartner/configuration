@@ -17,9 +17,9 @@ class PullConf
      */
     protected $workingDirectory;
 
-    public function __construct()
+    public function __construct($workingDirectory)
     {
-        $this->workingDirectory = __DIR__ . '/../configs';
+        $this->workingDirectory = $workingDirectory;
 
         if (!file_exists($this->workingDirectory)) {
             if (!mkdir($this->workingDirectory)) {
