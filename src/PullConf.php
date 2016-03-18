@@ -22,7 +22,8 @@ class PullConf
         $this->workingDirectory = $workingDirectory;
 
         if (!file_exists($this->workingDirectory)) {
-            if (!mkdir($this->workingDirectory)) {
+            $directory = dirname($this->workingDirectory);
+            if (!is_writable($directory) || !mkdir($this->workingDirectory)) {
                 throw new \Exception('Failed to create config directory.');
             }
         }
