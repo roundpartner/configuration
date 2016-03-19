@@ -17,6 +17,9 @@ class RemoteFile implements PluginInterface
     {
         $command = sprintf('scp alice:/opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
         $process = new Process($command, $workingDirectory);
+        if (!is_dir($workingDirectory)) {
+            return false;
+        }
         $process->run();
         if (!$process->isSuccessful()) {
             return false;
