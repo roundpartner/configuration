@@ -57,5 +57,4 @@ class SecureConfTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->instance->get('missing', 'test_key_four'));
     }
-
 }

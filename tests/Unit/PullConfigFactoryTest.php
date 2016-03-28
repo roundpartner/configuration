@@ -32,5 +32,4 @@ class PullConfFactoryTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('\Exception', 'Unable to create config directory because target is not a directory');
         \RoundPartner\Conf\PullConfigFactory::create(CONFIG_DIR . '/README.md');
     }
-
 }
