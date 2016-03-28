@@ -17,6 +17,12 @@ class PullConf
      */
     protected $workingDirectory;
 
+    /**
+     * PullConf constructor.
+     *
+     * @param string $workingDirectory
+     * @throws \Exception
+     */
     public function __construct($workingDirectory)
     {
         $this->workingDirectory = $workingDirectory;
@@ -80,6 +86,11 @@ class PullConf
         throw new \Exception('Failed to download configs');
     }
 
+    /**
+     * @param PluginInterface $plugin
+     *
+     * @return bool
+     */
     public function addPlugin(PluginInterface $plugin)
     {
         $this->plugins[get_class($plugin)] = $plugin;

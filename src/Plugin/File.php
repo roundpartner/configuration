@@ -4,6 +4,7 @@ namespace RoundPartner\Conf\Plugin;
 
 class File implements PluginInterface
 {
+    const CONFIG_BASE_DIRECTORY = '/opt/roundpartner/library/rp-conf/configs';
 
     /**
      * @var string
@@ -28,11 +29,11 @@ class File implements PluginInterface
      */
     public function pullConfig($config, $workingDirectory)
     {
-        if (!file_exists('/opt/roundpartner/library/rp-conf/configs/' . $config . '.ini')) {
+        if (!file_exists(self::CONFIG_BASE_DIRECTORY . '/' . $config . '.ini')) {
             return false;
         }
 
-        $command = sprintf('cp /opt/roundpartner/library/rp-conf/configs/%s.ini %s.ini', $config, $config);
+        $command = sprintf('cp %s/%s.ini %s.ini', self::CONFIG_BASE_DIRECTORY, $config, $config);
 
         return $this->callProcess($command, $workingDirectory);
     }

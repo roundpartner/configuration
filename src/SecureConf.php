@@ -70,6 +70,11 @@ class SecureConf
         return $config[$option];
     }
 
+    /**
+     * @param string $heading
+     *
+     * @return bool
+     */
     private function loadConfig($heading)
     {
         $authConfigFile = $this->configDirectory . '/' . $heading . '.ini';
