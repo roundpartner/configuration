@@ -1,6 +1,7 @@
+[![Build Status](https://travis-ci.org/roundpartner/configuration.svg?branch=master)](https://travis-ci.org/roundpartner/configuration)
+
 # Configuration
 Configuration for webservices
-
 
 ## Post Installation
 
