@@ -1,4 +1,4 @@
-# configuration
+# Configuration
 Configuration for webservices
 
 
@@ -19,7 +19,6 @@ If the vendor folder is located in a subdirectory then pass in the path to the d
 
 ## Testing
 ```bash
-cd tests
 phpunit
 ```
 
