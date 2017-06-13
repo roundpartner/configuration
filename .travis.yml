@@ -10,6 +10,7 @@ php:
 
 install:
   - composer install
+  - ./bin/set_configs_permission.sh
 
 script:
   - phpunit tests
