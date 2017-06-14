@@ -24,6 +24,7 @@ class File implements PluginInterface
      */
     public function __construct($baseDirectory = self::CONFIG_BASE_DIRECTORY, $processRunner = 'Symfony\Component\Process\Process')
     {
+        $this->baseDirectory = $baseDirectory;
         $this->processRunner = $processRunner;
     }
 
@@ -51,7 +52,7 @@ class File implements PluginInterface
      */
     public function configExists($config)
     {
-        return file_exists(self::CONFIG_BASE_DIRECTORY . '/' . $config . '.ini');
+        return file_exists($this->baseDirectory . '/' . $config . '.ini');
     }
 
     /**
