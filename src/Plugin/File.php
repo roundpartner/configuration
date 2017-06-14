@@ -2,11 +2,14 @@
 
 namespace RoundPartner\Conf\Plugin;
 
-use Symfony\Component\Process\Process;
-
 class File implements PluginInterface
 {
     const CONFIG_BASE_DIRECTORY = '/opt/roundpartner/library/rp-conf/configs';
+
+    /**
+     * @var string
+     */
+    protected $baseDirectory;
 
     /**
      * @var string
@@ -16,9 +19,10 @@ class File implements PluginInterface
     /**
      * File constructor.
      *
+     * @param string $baseDirectory
      * @param string $processRunner
      */
-    public function __construct($processRunner = 'Symfony\Component\Process\Process')
+    public function __construct($baseDirectory = self::CONFIG_BASE_DIRECTORY, $processRunner = 'Symfony\Component\Process\Process')
     {
         $this->processRunner = $processRunner;
     }
@@ -42,11 +46,10 @@ class File implements PluginInterface
 
     /**
      * @param string $config
-     * @param string $workingDirectory
      *
      * @return bool
      */
-    public function configExists($config, $workingDirectory)
+    public function configExists($config)
     {
         return file_exists(self::CONFIG_BASE_DIRECTORY . '/' . $config . '.ini');
     }
