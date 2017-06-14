@@ -9,23 +9,16 @@ class PullConfTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $testDirectory = '/tmp/configs';
+        $mock = $this->getMockBuilder('RoundPartner\Conf\Plugin\File')
+            ->setMethods(['pullConfig'])
+            ->getMock();
+        $mock->expects($this->any())
+            ->method('pullConfig')
+            ->willReturn($this->returnValue(true));
 
         $this->cleanConfigFolder();
         $this->config = new \RoundPartner\Conf\PullConf(CONFIG_DIR);
-        $this->config->addPlugin(new \RoundPartner\Conf\Plugin\File($testDirectory));
-
-        if (!file_exists($testDirectory)) {
-            mkdir($testDirectory);
-        }
-        $data = <<<DATA
-[test]
-test_key_one='test value two'
-test_key_two='test value two'
-test_key_three='test value three'
-DATA;
-
-        file_put_contents($testDirectory . '/test.ini', $data);
+        $this->config->addPlugin($mock);
     }
 
     public function testGetConfig()
