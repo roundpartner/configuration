@@ -36,11 +36,11 @@ class File implements PluginInterface
      */
     public function pullConfig($config, $workingDirectory)
     {
-        if (!$this->configExists($config, $workingDirectory)) {
+        if (!$this->configExists($config)) {
             return false;
         }
 
-        $command = sprintf('cp %s/%s.ini %s.ini', self::CONFIG_BASE_DIRECTORY, $config, $config);
+        $command = sprintf('cp %s/%s.ini %s.ini', $this->baseDirectory, $config, $config);
 
         return $this->callProcess($command, $workingDirectory);
     }

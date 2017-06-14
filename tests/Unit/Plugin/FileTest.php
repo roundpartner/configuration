@@ -28,7 +28,7 @@ DATA;
     {
         $workingDirectory = CONFIG_DIR;
         $service = new \RoundPartner\Conf\Plugin\File($this->testDirectory);
-        $this->assertTrue($service->configExists('test', $workingDirectory));
+        $this->assertTrue($service->configExists('test'));
     }
 
     public function testPullConfig()
