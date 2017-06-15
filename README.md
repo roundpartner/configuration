@@ -1,6 +1,7 @@
-# configuration
-Configuration for webservices
+[![Build Status](https://travis-ci.org/roundpartner/configuration.svg?branch=master)](https://travis-ci.org/roundpartner/configuration)
 
+# Configuration
+Configuration for webservices
 
 ## Post Installation
 
@@ -19,7 +20,6 @@ If the vendor folder is located in a subdirectory then pass in the path to the d
 
 ## Testing
 ```bash
-cd tests
 phpunit
 ```
 

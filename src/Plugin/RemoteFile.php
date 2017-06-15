@@ -7,9 +7,22 @@ use Symfony\Component\Process\ProcessBuilder;
 
 class RemoteFile implements PluginInterface
 {
-    const REMOTE_CONFIG_PATH = 'alice:/opt/roundpartner/library/rp-conf/configs/';
+    const REMOTE_CONFIG_PATH = 'alice:/opt/roundpartner/library/rp-conf/configs';
     const CONFIG_SUFFIX = '.ini';
     const COMMAND_PREFIX = 'scp';
+
+    /**
+     * @var string
+     */
+    protected $remoteDirectory;
+
+    /**
+     * @param string $remoteDirectory
+     */
+    public function __construct($remoteDirectory = self::REMOTE_CONFIG_PATH)
+    {
+        $this->remoteDirectory = $remoteDirectory;
+    }
 
     /**
      * @param string $config
@@ -41,7 +54,7 @@ class RemoteFile implements PluginInterface
     {
         $builder = new ProcessBuilder();
         $arguments = [
-            self::REMOTE_CONFIG_PATH . $config . self::CONFIG_SUFFIX,
+            $this->remoteDirectory . '/' . $config . self::CONFIG_SUFFIX,
             $config . self::CONFIG_SUFFIX
         ];
 

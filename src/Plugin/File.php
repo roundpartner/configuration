@@ -9,15 +9,22 @@ class File implements PluginInterface
     /**
      * @var string
      */
+    protected $baseDirectory;
+
+    /**
+     * @var string
+     */
     protected $processRunner;
 
     /**
      * File constructor.
      *
+     * @param string $baseDirectory
      * @param string $processRunner
      */
-    public function __construct($processRunner = 'Symfony\Component\Process\Process')
+    public function __construct($baseDirectory = self::CONFIG_BASE_DIRECTORY, $processRunner = 'Symfony\Component\Process\Process')
     {
+        $this->baseDirectory = $baseDirectory;
         $this->processRunner = $processRunner;
     }
 
@@ -29,13 +36,23 @@ class File implements PluginInterface
      */
     public function pullConfig($config, $workingDirectory)
     {
-        if (!file_exists(self::CONFIG_BASE_DIRECTORY . '/' . $config . '.ini')) {
+        if (!$this->configExists($config)) {
             return false;
         }
 
-        $command = sprintf('cp %s/%s.ini %s.ini', self::CONFIG_BASE_DIRECTORY, $config, $config);
+        $command = sprintf('cp %s/%s.ini %s.ini', $this->baseDirectory, $config, $config);
 
         return $this->callProcess($command, $workingDirectory);
+    }
+
+    /**
+     * @param string $config
+     *
+     * @return bool
+     */
+    public function configExists($config)
+    {
+        return file_exists($this->baseDirectory . '/' . $config . '.ini');
     }
 
     /**

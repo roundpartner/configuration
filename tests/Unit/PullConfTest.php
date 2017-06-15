@@ -9,9 +9,16 @@ class PullConfTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $mock = $this->getMockBuilder('RoundPartner\Conf\Plugin\File')
+            ->setMethods(['pullConfig'])
+            ->getMock();
+        $mock->expects($this->any())
+            ->method('pullConfig')
+            ->willReturn($this->returnValue(true));
+
         $this->cleanConfigFolder();
         $this->config = new \RoundPartner\Conf\PullConf(CONFIG_DIR);
-        $this->config->addPlugin(new \RoundPartner\Conf\Plugin\File());
+        $this->config->addPlugin($mock);
     }
 
     public function testGetConfig()
@@ -26,7 +33,7 @@ class PullConfTest extends PHPUnit_Framework_TestCase
 
     public function testAddPlugin()
     {
-        $this->assertTrue($this->config->addPlugin(new \RoundPartner\Conf\Plugin\File()));
+        $this->assertTrue($this->config->addPlugin(new \RoundPartner\Conf\Plugin\File(CONFIG_DIR)));
     }
 
     private function cleanConfigFolder()
