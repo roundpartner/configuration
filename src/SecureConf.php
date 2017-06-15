@@ -15,12 +15,18 @@ class SecureConf
     private $configDirectory;
 
     /**
-     * SecureConf constructor.
+     * @var array
      */
-    public function __construct()
+    private $plugins;
+
+    /**
+     * @param array $plugins
+     */
+    public function __construct($plugins = ['RoundPartner\Conf\Plugin\File', 'RoundPartner\Conf\Plugin\RemoteFile'])
     {
         $this->configDirectory = dirname(__FILE__) . '/../configs';
         $this->config = array();
+        $this->plugins = $plugins;
     }
 
     /**
@@ -79,7 +85,7 @@ class SecureConf
     {
         $authConfigFile = $this->configDirectory . '/' . $heading . '.ini';
         if (!file_exists($authConfigFile)) {
-            $pullConf = PullConfigFactory::create($this->configDirectory);
+            $pullConf = PullConfigFactory::create($this->configDirectory, $this->plugins);
             try {
                 $pullConf->pull($heading);
             } catch (\Exception $exception) {

@@ -8,9 +8,30 @@ class SecureConfTest extends PHPUnit_Framework_TestCase
      */
     protected $instance;
 
+    /**
+     * @var string
+     */
+    protected $testDirectory;
+
     public function setUp()
     {
-        $this->instance = new \RoundPartner\Conf\SecureConf();
+        $this->testDirectory = '/tmp/configs';
+        if (!file_exists($this->testDirectory)) {
+            mkdir($this->testDirectory);
+        }
+        $data = <<<DATA
+[test]
+test_key_one='test value two'
+test_key_two='test value two'
+test_key_three='test value three'
+DATA;
+
+        file_put_contents($this->testDirectory . '/test.ini', $data);
+
+        $plugins = array(
+            new \RoundPartner\Conf\Plugin\File($this->testDirectory)
+        );
+        $this->instance = new \RoundPartner\Conf\SecureConf($plugins);
     }
 
     public function testConstruct()
