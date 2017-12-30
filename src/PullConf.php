@@ -42,7 +42,6 @@ class PullConf
         }
 
         $this->plugins = array();
-
     }
 
     /**
